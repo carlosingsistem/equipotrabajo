@@ -48,4 +48,13 @@ def edit_miembro(id_miembro):
     
     return render_template("miembro/edit.html", miembro=miembro)
 
+@bp_miembro.route("/delete/<int:id_miembro>")
+def delete_miembro(id_miembro):
+    # Buscamos el miembro en la BD
+    miembro = Miembro.query.get(id_miembro)
+    # Eliminamos el miembro
+    db.session.delete(miembro)
+    db.session.commit()
+    # Redirigimos al listado
+    return redirect(url_for("bp_miembro.index"))
 

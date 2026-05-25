@@ -6,7 +6,7 @@
 
 <ul>
     {% for item in miembros %}
-    <li>Nombre: {{ item.nombre}} Email: {{ item.email }} <a href="{{ url_for('bp_miembro.edit_miembro', id_miembro=item.id) }}">Editar</a></li>
+    <li>Nombre: {{ item.nombre}} Email: {{ item.email }} <a href="{{ url_for('bp_miembro.edit_miembro', id_miembro=item.id) }}">Editar</a>  <a href="{{ url_for('bp_miembro.delete_miembro', id_miembro=item.id) }}">Eliminar</a></li>
     {% else %}
     <li>No hay miembros</li>
     {% endfor %}
