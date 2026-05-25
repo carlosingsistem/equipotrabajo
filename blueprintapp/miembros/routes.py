@@ -28,6 +28,24 @@ def create():
         # Redireccion al listado de miembros
         return redirect(url_for('bp_miembro.index'))
         
-        
+# Para editar un miembro    
+@bp_miembro.route("/edit/<int:id_miembro>", methods=['GET', 'POST'])
+def edit_miembro(id_miembro):
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        email = request.form['email']
+        # Buscamos el miembro en la BD
+        miembro = Miembro.query.get(id_miembro)
+        # Actualizamos sus datos
+        miembro.nombre = nombre
+        miembro.email = email
+        db.session.commit()
+        # Redireccion al listado de miembros
+        return redirect(url_for('bp_miembro.index'))
+    
+    # Si es GET, mostramos el formulario con datos actuales
+    miembro = Miembro.query.get(id_miembro)
+    
+    return render_template("miembro/edit.html", miembro=miembro)
 
 
