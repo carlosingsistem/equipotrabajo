@@ -8,11 +8,13 @@ from blueprintapp.miembros.models import Miembro
 
 bp_miembro = Blueprint('bp_miembro',__name__,template_folder='templates')
 
+# Listado de miembros
 @bp_miembro.route("/")
 def index():
     miembros = Miembro.query.all()
     return render_template('miembro/index.html',miembros=miembros)
 
+# Para crear un miembro
 @bp_miembro.route("/create",methods=['GET','POST'])
 def create():
     if request.method == 'GET':
@@ -48,6 +50,7 @@ def edit_miembro(id_miembro):
     
     return render_template("miembro/edit.html", miembro=miembro)
 
+# Para eliminar un miembro por id
 @bp_miembro.route("/delete/<int:id_miembro>")
 def delete_miembro(id_miembro):
     # Buscamos el miembro en la BD
