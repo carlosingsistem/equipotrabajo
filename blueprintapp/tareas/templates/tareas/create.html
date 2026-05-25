@@ -1,12 +1,24 @@
 {% extends 'base.html' %}
 {% block title %}NUEVA - TAREA{% endblock %}
 
-{% block content%}
-<h1>Crear Tarea</h1>
-<form action="{{ url_for('bp_tarea.create') }}" method="POST">
-    <label for="">Descripcion:</label>
-    <input type="text" name="descripcion" placeholder="Descripcion" required="required">
-    <input type="checkbox" name="completado"> Completado
-    <input type="submit" value="Enviar">
-</form>
-{% endblock%}
+{% block content %}
+<div class="card shadow">
+    <div class="card-header bg-primary text-white">
+        <h2 class="h5 mb-0">Nueva Tarea</h2>
+    </div>
+    <div class="card-body">
+        <form action="{{ url_for('bp_tarea.create')}}" method="post">
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripcion:</label>
+                <input type="text" class="form-control" name="descripcion" id="descripcion" placeholder="Descripcion" required>
+            </div>
+            <div class="mb-3">
+                <input type="checkbox" class="form-check-input" name="completado" id="completado">
+                <label for="completado" class="form-label">Completado</label>
+            </div>
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a href="{{ url_for('bp_tarea.index') }}" class="btn btn-info">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
