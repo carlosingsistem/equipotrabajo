@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<h1>Crear Tarea</h1>
+<form action="{{ url_for('bp_tarea.edit_tarea', id_tarea=tarea.id) }}" method="POST">
+    <label for="">Descripcion:</label>
+    <input type="text" name="descripcion" placeholder="Descripcion" value="{{ tarea.descripcion }}" required="required">
+    <input type="checkbox" name="completado" {% if tarea.completado %}checked{% endif %}> Completado
+    <input type="submit" value="Enviar">
+</form>
+{% endblock%}

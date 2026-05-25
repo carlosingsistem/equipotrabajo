@@ -8,11 +8,13 @@ from blueprintapp.tareas.models import Tarea
 
 bp_tarea = Blueprint('bp_tarea',__name__,template_folder='templates')
 
+# Para listar las tareas
 @bp_tarea.route("/")
 def index():
     tareas = Tarea.query.all()
     return render_template('tareas/index.html',tareas=tareas)
 
+# Para crear una nueva tarea
 @bp_tarea.route("/create",methods=['GET','POST'])
 def create():
     if request.method == 'GET':
@@ -25,9 +27,28 @@ def create():
         # Insertar en la bd a traves del ORM
         db.session.add(tarea)
         db.session.commit()
-        # Redireccion al listado de miembros
+        # Redireccion al listado de tareas
         return redirect(url_for('bp_tarea.index'))
         
+# Para actualizar una tarea
+@bp_tarea.route("/edit/<int:id_tarea>" , methods=["GET", "POST"])
+def edit_tarea(id_tarea):
+    if request.method == "POST":
+        descripcion = request.form['descripcion']
+        completado = True if 'completado' in request.form.keys() else False
+        # Buscamos la tarea en la BD
+        tarea = Tarea.query.get(id_tarea)
+        # Actualizamos los datos la tarea
+        tarea.descripcion = descripcion
+        tarea.completado = completado
+        db.session.commit()
+        # Redirigimos al listado
+        return redirect(url_for("bp_tarea.index"))
+    
+    # Si es GET, mostramos el formulario con datos actuales
+    tarea = Tarea.query.get(id_tarea)
+    
+    return render_template("tareas/edit.html" , tarea=tarea)
         
 
 
