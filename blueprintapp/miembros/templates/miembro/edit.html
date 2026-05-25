@@ -1,14 +1,27 @@
 {% extends 'base.html' %}
 {% block title %}EDITAR - MIEMBRO{% endblock %}
 
-{% block content%}
-<h1>Editar Miembro</h1>
-<form action="{{ url_for('bp_miembro.edit_miembro', id_miembro=miembro.id) }}" method="POST">
-    <label for="">Nombre:</label>
-    <input type="text" name="nombre" placeholder="Nombre" value="{{ miembro.nombre }}" required="required">
-    <label for="">Correo:</label>
-    <input type="email" name="email" placeholder="Correo" value="{{ miembro.email }}" required="required">
-    <input type="submit" value="Enviar">
+{% block content %}
+<div class="card">
+    <div class="card-header bg-info text-white">
+        <h2 class="h5 mb-2">Editar Miembro</h2>
+    </div>
+    <div class="card-body">
+        <form action="{{ url_for('bp_miembro.edit_miembro', id_miembro=miembro.id)}}" method="post">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre:</label>
+                <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre"
+                    value="{{ miembro.nombre }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Email"
+                    value="{{ miembro.email }}" required>
+            </div>
 
-</form>
-{% endblock%}
+            <button type="submit" class="btn btn-success">Actualizar</button>
+            <a href="{{ url_for('bp_miembro.index') }}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
