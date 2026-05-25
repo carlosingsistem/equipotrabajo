@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<h1>Editar Miembro</h1>
+<form action="{{ url_for('bp_miembro.edit_miembro', id_miembro=miembro.id) }}" method="POST">
+    <label for="">Nombre:</label>
+    <input type="text" name="nombre" placeholder="Nombre" value="{{ miembro.nombre }}" required="required">
+    <label for="">Correo:</label>
+    <input type="email" name="email" placeholder="Correo" value="{{ miembro.email }}" required="required">
+    <input type="submit" value="Enviar">
+
+</form>
+{% endblock%}
