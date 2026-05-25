@@ -49,6 +49,17 @@ def edit_tarea(id_tarea):
     tarea = Tarea.query.get(id_tarea)
     
     return render_template("tareas/edit.html" , tarea=tarea)
+
+# Para eliminar una tarea
+@bp_tarea.route("/delete/<int:id_tarea>")
+def delete_tarea(id_tarea):
+    # Buscamos la tarea en la BD por su id
+    tarea = Tarea.query.get(id_tarea)
+    # Eliminamos el registro
+    db.session.delete(tarea)
+    db.session.commit()
+    # Redirigimos al listado de tareas
+    return redirect(url_for("bp_tarea.index"))
         
 
 

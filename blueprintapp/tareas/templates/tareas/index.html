@@ -6,7 +6,7 @@
 
 <ul>
     {% for item in tareas %}
-    <li>Tarea: {{ item.descripcion}} Completado: {{ 'COMPLETADO' if item.completado == True else 'PENDIENTE' }} <a href="{{ url_for('bp_tarea.edit_tarea', id_tarea=item.id) }}">Editar </a> </li>
+    <li>Tarea: {{ item.descripcion}} Completado: {{ 'COMPLETADO' if item.completado == True else 'PENDIENTE' }} <a href="{{ url_for('bp_tarea.edit_tarea', id_tarea=item.id) }}">Editar </a> <a href="{{ url_for('bp_tarea.delete_tarea', id_tarea=item.id) }}">Eliminar </a></li>
     {% else %}
     <li>No hay tareas</li>
     {% endfor %}
