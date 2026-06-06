@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}DASHBOARD{% endblock %}
+
+{% block content %}
+
+{% if current_user.is_authenticated %}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 text-center mb-5">
+            <h1 class="display-5 fw-bold text-primary">📕 Home Page</h1>
+            <p class="lead text-muted">Bienvenido al Sistema de Gestiond de Tareas y Miembros</p>
+            <p class="lead text-muted">Usuario: {{ current_user.username }}</p>
+            <hr class="w-25 mx-auto text-primary opacity-75">
+        </div>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+
+        <!-- Tarjeta de Miembros -->
+        <div class="col-md-6 col-lg-5">
+            <div class="card h-100 border-primary shadow-sm text-center">
+                <div class="card-body p-4">
+                    <div class="mb-3 fs-1 text-primary">👤</div>
+                    <h5 class="fw-bold">Gestión de Miembros</h5>
+                    <p class="text-muted">Administra el equipo, crea nuevos perfiles.</p>
+                    <a href="{{ url_for('bp_miembro.index') }}" class="btn btn-outline-primary w-100 mt-3">
+                        <i class="bi bi-person-badge me-2"></i> Ver Miembros
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta de Tareas -->
+        <div class="col-md-6 col-lg-5">
+            <div class="card h-100 border-success shadow-sm text-center">
+                <div class="card-body p-4">
+                    <div class="mb-3 fs-1 text-success">📜</div>
+                    <h5 class="fw-bold">Gestión de Tareas</h5>
+                    <p class="text-muted">Organiza proyectos, marca completados y sigue el progreso.</p>
+                    <a href="{{ url_for('bp_tarea.index') }}" class="btn btn-outline-success w-100 mt-3">
+                        <i class="bi bi-list-task me-2"></i> Ver Tareas
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock %}
