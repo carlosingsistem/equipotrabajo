@@ -1,21 +1,22 @@
 # Librerias a usar en el modulo
-from flask import request,render_template,redirect,url_for,Blueprint
-
+from flask import request, render_template, redirect, url_for
+from flask_login import login_required
 # Referencia a la base de datos
-from blueprintapp.app import db
+from blueprintapp.extensions import db
 # Modelos con los que interactura el modulo
 from blueprintapp.miembros.models import Miembro
-
-bp_miembro = Blueprint('bp_miembro',__name__,template_folder='templates')
+from blueprintapp.miembros import bp_miembro
 
 # Listado de miembros
 @bp_miembro.route("/")
+@login_required
 def index():
     miembros = Miembro.query.all()
     return render_template('miembro/index.html',miembros=miembros)
 
 # Para crear un miembro
 @bp_miembro.route("/create",methods=['GET','POST'])
+@login_required
 def create():
     if request.method == 'GET':
         return render_template('miembro/create.html')
@@ -32,6 +33,7 @@ def create():
         
 # Para editar un miembro    
 @bp_miembro.route("/edit/<int:id_miembro>", methods=['GET', 'POST'])
+@login_required
 def edit_miembro(id_miembro):
     if request.method == 'POST':
         nombre = request.form['nombre']
@@ -52,6 +54,7 @@ def edit_miembro(id_miembro):
 
 # Para eliminar un miembro por id
 @bp_miembro.route("/delete/<int:id_miembro>")
+@login_required
 def delete_miembro(id_miembro):
     # Buscamos el miembro en la BD
     miembro = Miembro.query.get(id_miembro)

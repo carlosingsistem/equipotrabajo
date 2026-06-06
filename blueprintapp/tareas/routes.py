@@ -1,21 +1,22 @@
 # Librerias a usar en el modulo
-from flask import request,render_template,redirect,url_for,Blueprint
-
+from flask import request, render_template, redirect, url_for
+from flask_login import login_required
 # Referencia a la base de datos
-from blueprintapp.app import db
+from blueprintapp.extensions import db
 # Modelos con los que interactura el modulo
 from blueprintapp.tareas.models import Tarea
-
-bp_tarea = Blueprint('bp_tarea',__name__,template_folder='templates')
+from blueprintapp.tareas import bp_tarea
 
 # Para listar las tareas
 @bp_tarea.route("/")
+@login_required
 def index():
     tareas = Tarea.query.all()
     return render_template('tareas/index.html',tareas=tareas)
 
 # Para crear una nueva tarea
 @bp_tarea.route("/create",methods=['GET','POST'])
+@login_required
 def create():
     if request.method == 'GET':
         return render_template('tareas/create.html')
@@ -32,6 +33,7 @@ def create():
         
 # Para actualizar una tarea
 @bp_tarea.route("/edit/<int:id_tarea>" , methods=["GET", "POST"])
+@login_required
 def edit_tarea(id_tarea):
     if request.method == "POST":
         descripcion = request.form['descripcion']
@@ -52,6 +54,7 @@ def edit_tarea(id_tarea):
 
 # Para eliminar una tarea
 @bp_tarea.route("/delete/<int:id_tarea>")
+@login_required
 def delete_tarea(id_tarea):
     # Buscamos la tarea en la BD por su id
     tarea = Tarea.query.get(id_tarea)
@@ -60,6 +63,3 @@ def delete_tarea(id_tarea):
     db.session.commit()
     # Redirigimos al listado de tareas
     return redirect(url_for("bp_tarea.index"))
-        
-
-
